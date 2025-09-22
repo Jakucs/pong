@@ -33,6 +33,8 @@ while over:
         elif event.type == pygame.MOUSEMOTION:
             control_mode = "mouse"
     print("Történés: ", event)
+    ball_x += ball_speed_x
+    ball_y += ball_speed_y
     screen.fill((0, 0, 0))  # background
     pygame.draw.rect(screen, (255, 255, 255), (paddle_x, paddle_y, paddle_width, paddle_height))
     pygame.draw.circle(screen, (255, 255, 255), (ball_x, ball_y), ball_radius)
