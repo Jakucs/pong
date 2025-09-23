@@ -7,6 +7,7 @@ WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT)) #Screen size
 pygame.display.set_caption("Pong") # Window's name
 clock = pygame.time.Clock() # Clock object
+font = pygame.font.SysFont(None, 74) # Font object
 
 control_mode = "mouse"
 paddle_width = 100
@@ -44,7 +45,13 @@ while over:
     if ball_x + ball_radius >= WIDTH:
         ball_speed_x = -ball_speed_x
     elif ball_y >= HEIGHT:
-        print("Vesztettél")
+        text = font.render("Vesztettél!", True, (255, 0, 0)) # Make a new pics (Surface)
+        screen.fill((0, 0, 0)) # background
+        screen.blit(text, (WIDTH//2 - text.get_width()//2, 20)) # Draw this image on top of another image
+        pygame.display.flip()
+        pygame.time.wait(2000)  # vár 2 másodpercet
+        over = False  # kilép a ciklusból
+
     elif ball_x - ball_radius < 0:
         ball_speed_x = -ball_speed_x
     elif ball_y - ball_radius < 0:
