@@ -41,14 +41,16 @@ while over:
     pygame.display.flip()
     clock.tick(60) # We use clock object. Max 60 round / second
 
-    if ball_x >= WIDTH:
-        ball_speed_x = -4
+    if ball_x + ball_radius >= WIDTH:
+        ball_speed_x = -ball_speed_x
     elif ball_y >= HEIGHT:
-        ball_speed_y = -4
-    elif ball_x < 0:
-        ball_speed_x = 4
-    elif ball_y < 0:
-        ball_speed_y = 4
+        print("Vesztettél")
+    elif ball_x - ball_radius < 0:
+        ball_speed_x = -ball_speed_x
+    elif ball_y - ball_radius < 0:
+        ball_speed_y = -ball_speed_y
+    elif (paddle_x <= ball_x <= paddle_x + paddle_width) and (ball_y + ball_radius >= paddle_y):
+        ball_speed_y = -ball_speed_y
 
     if control_mode == "keyboard":
         keys = pygame.key.get_pressed()
