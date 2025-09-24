@@ -64,6 +64,7 @@ while over:
         ball_speed_y = -ball_speed_y
     elif (paddle_x <= ball_x <= paddle_x + paddle_width) and (ball_y + ball_radius >= paddle_y):
         ball_speed_y = -ball_speed_y
+        ball_y = paddle_y - ball_radius
         score += 1
 
     # Controls
