@@ -8,6 +8,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT)) #Screen size
 pygame.display.set_caption("Pong") # Window's name
 clock = pygame.time.Clock() # Clock object
 font = pygame.font.SysFont(None, 74) # Font object
+font_point = pygame.font.SysFont(None, 24)
 
 # Basic datas
 control_mode = "mouse"
@@ -21,6 +22,7 @@ ball_y = 100
 ball_speed_x = 4
 ball_speed_y = 4
 ball_radius = 10
+score = 0
 
 
 
@@ -37,7 +39,10 @@ while over:
     print("Történés: ", event)
     ball_x += ball_speed_x
     ball_y += ball_speed_y
+
     screen.fill((0, 0, 0))  # background
+    point = font_point.render(f"Point: {score}", True, (255, 255, 255)) # Make a new pics (Surface, under point)
+    screen.blit(point, (point.get_width()//4, 10)) # Draw this image on top of another image and we make position
     pygame.draw.rect(screen, (255, 255, 255), (paddle_x, paddle_y, paddle_width, paddle_height))
     pygame.draw.circle(screen, (255, 255, 255), (ball_x, ball_y), ball_radius)
     pygame.display.flip()
@@ -59,6 +64,7 @@ while over:
         ball_speed_y = -ball_speed_y
     elif (paddle_x <= ball_x <= paddle_x + paddle_width) and (ball_y + ball_radius >= paddle_y):
         ball_speed_y = -ball_speed_y
+        score += 1
 
     # Controls
     if control_mode == "keyboard":
