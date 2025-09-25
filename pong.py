@@ -17,8 +17,8 @@ paddle_height = 10
 paddle_x = (WIDTH-paddle_width) // 2
 paddle_y = HEIGHT - 30
 paddle_speed_keyboard = 6 # to keyboard control
-paddle_speed_actual = 0 # actual speed
-last_paddle_x = paddle_x
+paddle_speed_actual = 0 # actual speed, because of the mouse
+last_paddle_x = paddle_x # because of the mouse
 ball_x = 100
 ball_y = 100
 ball_speed_x = 4
@@ -26,7 +26,11 @@ ball_speed_y = 4
 ball_radius = 10
 score = 0
 
-
+targets = [
+    {"rect": pygame.Rect(50, 20, 100, 30), "color": (255, 0, 0), "points": 10},
+    {"rect": pygame.Rect(200, 20, 100, 30), "color": (0, 255, 0), "points": 20},
+    {"rect": pygame.Rect(350, 20, 100, 30), "color": (0, 0, 255), "points": 30},
+]
 
 over = True
 while over:
@@ -44,6 +48,10 @@ while over:
 
     # Drawings
     screen.fill((0, 0, 0))  # background
+
+    for target in targets:
+        pygame.draw.rect(screen, target["color"], target["rect"])
+
     point = font_point.render(f"Point: {score}", True, (255, 255, 255)) # Make a new pics (Surface, under point)
     screen.blit(point, (point.get_width()//4, 10)) # Draw this image on top of another image and we make position
     pygame.draw.rect(screen, (255, 255, 255), (paddle_x, paddle_y, paddle_width, paddle_height))
@@ -52,6 +60,8 @@ while over:
     ball_rect = pygame.Rect(ball_x - ball_radius, ball_y - ball_radius, ball_radius *2, ball_radius*2) # We create an invisible rectangle around ball (due to collision)
     pygame.display.flip()
     clock.tick(60) # We use clock object. Max 60 round / second
+
+
 
     # Ball collisions + speed
     if ball_x + ball_radius >= WIDTH:
@@ -87,6 +97,8 @@ while over:
         paddle_x = mouse_x - paddle_width // 2
         paddle_speed_actual = paddle_x - last_paddle_x
         last_paddle_x = paddle_x
+    else:
+        paddle_speed_actual = 0
 
 
 pygame.quit()
