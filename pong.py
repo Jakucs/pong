@@ -44,7 +44,9 @@ while over:
     point = font_point.render(f"Point: {score}", True, (255, 255, 255)) # Make a new pics (Surface, under point)
     screen.blit(point, (point.get_width()//4, 10)) # Draw this image on top of another image and we make position
     pygame.draw.rect(screen, (255, 255, 255), (paddle_x, paddle_y, paddle_width, paddle_height))
-    pygame.draw.circle(screen, (255, 255, 255), (ball_x, ball_y), ball_radius)
+    paddle_rect = pygame.Rect(paddle_x, paddle_y, paddle_width, paddle_height) # We create an invisible rectangle around paddle (due to collision)
+    pygame.draw.circle(screen, (255, 255, 255), (ball_x, ball_y), ball_radius) # Our ball
+    ball_rect = pygame.Rect(ball_x - ball_radius, ball_y - ball_radius, ball_radius *2, ball_radius*2) # We create an invisible rectangle around ball (due to collision)
     pygame.display.flip()
     clock.tick(60) # We use clock object. Max 60 round / second
 
