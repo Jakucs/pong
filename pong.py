@@ -16,7 +16,9 @@ paddle_width = 100
 paddle_height = 10
 paddle_x = (WIDTH-paddle_width) // 2
 paddle_y = HEIGHT - 30
-paddle_speed = 6
+paddle_speed_keyboard = 6 # to keyboard control
+paddle_speed_actual = 0 # actual speed
+last_paddle_x = paddle_x
 ball_x = 100
 ball_y = 100
 ball_speed_x = 4
@@ -40,6 +42,7 @@ while over:
     ball_x += ball_speed_x
     ball_y += ball_speed_y
 
+    # Drawings
     screen.fill((0, 0, 0))  # background
     point = font_point.render(f"Point: {score}", True, (255, 255, 255)) # Make a new pics (Surface, under point)
     screen.blit(point, (point.get_width()//4, 10)) # Draw this image on top of another image and we make position
@@ -50,7 +53,7 @@ while over:
     pygame.display.flip()
     clock.tick(60) # We use clock object. Max 60 round / second
 
-    # Ball collisions
+    # Ball collisions + speed
     if ball_x + ball_radius >= WIDTH:
         ball_speed_x = -ball_speed_x
     elif ball_y >= HEIGHT:
@@ -64,8 +67,9 @@ while over:
         ball_speed_x = -ball_speed_x
     elif ball_y - ball_radius < 0:
         ball_speed_y = -ball_speed_y
-    elif (paddle_x <= ball_x <= paddle_x + paddle_width) and (ball_y + ball_radius >= paddle_y):
+    elif ball_rect.colliderect(paddle_rect): # Old if: (paddle_x <= ball_x <= paddle_x + paddle_width) and (ball_y + ball_radius >= paddle_y)
         ball_speed_y = -ball_speed_y
+        ball_speed_x += paddle_speed_actual * 0.5
         ball_y = paddle_y - ball_radius
         score += 1
 
@@ -73,12 +77,16 @@ while over:
     if control_mode == "keyboard":
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and paddle_x > 0:
-            paddle_x -= paddle_speed
+            paddle_x -= paddle_speed_keyboard
+            paddle_speed_actual = -paddle_speed_keyboard
         if keys[pygame.K_RIGHT] and paddle_x < WIDTH - paddle_width:
-            paddle_x += paddle_speed
+            paddle_x += paddle_speed_keyboard
+            paddle_speed_actual = paddle_speed_keyboard
     elif control_mode == "mouse":
         mouse_x, _= pygame.mouse.get_pos()
         paddle_x = mouse_x - paddle_width // 2
+        paddle_speed_actual = paddle_x - last_paddle_x
+        last_paddle_x = paddle_x
 
 
 pygame.quit()
