@@ -61,7 +61,13 @@ while over:
     pygame.display.flip()
     clock.tick(60) # We use clock object. Max 60 round / second
 
-
+    for target in targets[:]: # Do not modify the list, we can safely iterate through it.
+        if ball_rect.colliderect(target["rect"]):
+            score += target["points"]
+            targets.remove(target)
+            ball_speed_y = -ball_speed_y
+            ball_speed_x = -ball_speed_x # KÉRDÉS
+            break
 
     # Ball collisions + speed
     if ball_x + ball_radius >= WIDTH:
