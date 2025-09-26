@@ -27,9 +27,17 @@ ball_radius = 10
 score = 0
 
 targets = [
-    {"rect": pygame.Rect(50, 20, 100, 30), "color": (255, 0, 0), "points": 10},
-    {"rect": pygame.Rect(200, 20, 100, 30), "color": (0, 255, 0), "points": 20},
-    {"rect": pygame.Rect(350, 20, 100, 30), "color": (0, 0, 255), "points": 30},
+    {"rect": pygame.Rect(50, 20, 100, 20), "color": (255, 0, 0), "points": 10},
+    {"rect": pygame.Rect(200, 20, 100, 20), "color": (0, 255, 0), "points": 20},
+    {"rect": pygame.Rect(350, 20, 100, 20), "color": (0, 0, 255), "points": 30},
+    {"rect": pygame.Rect(500, 20, 100, 20), "color": (255, 255, 0), "points": 30},
+    {"rect": pygame.Rect(650, 20, 100, 20), "color": (0, 255, 255), "points": 30},
+
+    {"rect": pygame.Rect(50, 50, 100, 20), "color": (255, 0, 0), "points": 10},
+    {"rect": pygame.Rect(200, 50, 100, 20), "color": (0, 255, 0), "points": 20},
+    {"rect": pygame.Rect(350, 50, 100, 20), "color": (0, 0, 255), "points": 30},
+    {"rect": pygame.Rect(500, 50, 100, 20), "color": (255, 255, 0), "points": 30},
+    {"rect": pygame.Rect(650, 50, 100, 20), "color": (0, 255, 255), "points": 30},
 ]
 
 over = True
@@ -62,13 +70,13 @@ while over:
     clock.tick(60) # We use clock object. Max 60 round / second
 
     for target in targets[:]: # Do not modify the list, we can safely iterate through it.
-        if ball_rect.colliderect(target["rect"]): # We check if the ball rect collides with the target rect
+        if ball_rect.colliderect(target["rect"]): # We check if the ball invisible rect collides with the target invisible rect
             score += target["points"]
             targets.remove(target)
             if ball_y < target["rect"].top or ball_y > target["rect"].bottom:
                 ball_speed_y = -ball_speed_y
             else:
-                ball_speed_x = -ball_speed_x # KÉRDÉS
+                ball_speed_x = -ball_speed_x
             break
 
     # Ball collisions + speed
