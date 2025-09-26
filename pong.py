@@ -26,19 +26,21 @@ ball_speed_y = 4
 ball_radius = 10
 score = 0
 
-targets = [
-    {"rect": pygame.Rect(50, 20, 100, 20), "color": (255, 0, 0), "points": 10},
-    {"rect": pygame.Rect(200, 20, 100, 20), "color": (0, 255, 0), "points": 20},
-    {"rect": pygame.Rect(350, 20, 100, 20), "color": (0, 0, 255), "points": 30},
-    {"rect": pygame.Rect(500, 20, 100, 20), "color": (255, 255, 0), "points": 30},
-    {"rect": pygame.Rect(650, 20, 100, 20), "color": (0, 255, 255), "points": 30},
-
-    {"rect": pygame.Rect(50, 50, 100, 20), "color": (255, 0, 0), "points": 10},
-    {"rect": pygame.Rect(200, 50, 100, 20), "color": (0, 255, 0), "points": 20},
-    {"rect": pygame.Rect(350, 50, 100, 20), "color": (0, 0, 255), "points": 30},
-    {"rect": pygame.Rect(500, 50, 100, 20), "color": (255, 255, 0), "points": 30},
-    {"rect": pygame.Rect(650, 50, 100, 20), "color": (0, 255, 255), "points": 30},
+colors = [
+    (255, 0, 0),
+    (0, 255, 0),
+    (0, 0, 255),
+    (255, 255, 0),
+    (0, 255, 255)
 ]
+
+targets = []
+for row in range(2):              # 2 rows
+    for col, color in enumerate(colors):
+        rect = pygame.Rect(50 + col * 150, 20 + row * 30, 100, 20) # Every iteration the col value is different, the targets width is 100. So we have to make 50pixel break between targets.
+        points = (col + 1) * 10    # it depends on col
+        targets.append({"rect": rect, "color": color, "points": points})
+
 
 over = True
 while over:
