@@ -35,8 +35,12 @@ colors = [
 ]
 
 targets = []
-for row in range(2):              # 2 rows
-    for col, color in enumerate(colors):
+for row in range(2):
+    if row % 2 == 0:
+        row_colors = colors
+    else:
+        row_colors = list(reversed(colors))
+    for col, color in enumerate(row_colors):
         rect = pygame.Rect(50 + col * 150, 20 + row * 30, 100, 20) # Every iteration the col value is different, the targets width is 100. So we have to make 50pixel break between targets.
         points = (col + 1) * 10    # it depends on col
         targets.append({"rect": rect, "color": color, "points": points})
