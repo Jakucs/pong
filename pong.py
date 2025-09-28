@@ -1,4 +1,5 @@
 import pygame
+import random
 
 pygame.init()
 
@@ -19,8 +20,8 @@ paddle_y = HEIGHT - 30
 paddle_speed_keyboard = 6 # to keyboard control
 paddle_speed_actual = 0 # actual speed, because of the mouse
 last_paddle_x = paddle_x # because of the mouse
-ball_x = 100
-ball_y = 100
+ball_x = 200
+ball_y = 200
 ball_speed_x = 4
 ball_speed_y = 4
 ball_radius = 10
@@ -32,17 +33,15 @@ colors = [
     (0, 255, 0),
     (0, 0, 255),
     (255, 255, 0),
-    (0, 255, 255)
+    (0, 255, 255),
+    (255, 0, 255)
 ] 
 
 targets = []
-for row in range(2):
-    if row % 2 == 0:
-        row_colors = colors
-    else:
-        row_colors = list(reversed(colors))
-    for col, color in enumerate(row_colors):
-        rect = pygame.Rect(50 + col * 150, 20 + row * 30, 100, 20) # Every iteration the col value is different, the targets width is 100. So we have to make 50pixel break between targets.
+for row in range(6):
+    random.shuffle(colors)
+    for col, color in enumerate(colors):
+        rect = pygame.Rect(50 + col * 120, 20 + row * 30, 100, 20) # Every iteration the col value is different, the targets width is 100. So we have to make 50pixel break between targets.
         points = (col + 1) * 10    # it depends on col
         targets.append({"rect": rect, "color": color, "points": points})
 
