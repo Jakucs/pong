@@ -25,6 +25,7 @@ ball_speed_x = 4
 ball_speed_y = 4
 ball_radius = 10
 score = 0
+max_speed = 30
 
 colors = [
     (255, 0, 0),
@@ -32,7 +33,7 @@ colors = [
     (0, 0, 255),
     (255, 255, 0),
     (0, 255, 255)
-]
+] 
 
 targets = []
 for row in range(2):
@@ -104,6 +105,15 @@ while over:
         ball_speed_x += paddle_speed_actual * 0.5
         ball_y = paddle_y - ball_radius
         score += 1
+    if ball_speed_x > max_speed:
+        ball_speed_x = max_speed
+    elif ball_speed_x < -max_speed:
+        ball_speed_x = -max_speed
+
+    if ball_speed_y > max_speed:
+        ball_speed_y = max_speed
+    elif ball_speed_y < -max_speed:
+        ball_speed_y = -max_speed
 
     # Controls
     if control_mode == "keyboard":
